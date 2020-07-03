@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Background Desktop</string>
     <string name="update">在线升级</string>
-    <string name="reset">恢复出厂</string>
-    <string name="change">切换方格</string>
-    <string name="delete_app">卸载应用</string>
+    <string name="reset">恢复出厂设置</string>
+    <string name="change">切换瀑布模式</string>
     <string name="open_setting">打开设置</string>
+    <string name="more_info">更多信息</string>
 </resources>

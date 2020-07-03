@@ -9,6 +9,7 @@
     <HorizontalScrollView
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -16,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="80dp">
 
-            <Button
+            <Button android:id="@+id/open_setting_id"
                 android:background="@drawable/button_kt_touch"
                 android:text="@string/open_setting"
                 android:textSize="20sp"
@@ -24,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <Button
+            <Button android:id="@+id/update_id"
                 android:background="@drawable/button_kt_touch"
                 android:text="@string/update"
                 android:textSize="20sp"
@@ -33,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <Button
+            <Button android:id="@+id/reset_id"
                 android:background="@drawable/button_kt_touch"
                 android:text="@string/reset"
                 android:textSize="20sp"
@@ -42,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <Button
+            <Button android:id="@+id/cut_layoutManager_id"
                 android:background="@drawable/button_kt_touch"
                 android:text="@string/change"
                 android:textSize="20sp"
@@ -51,14 +52,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <Button
-                android:background="@drawable/button_kt_touch"
-                android:text="@string/delete_app"
-                android:textSize="20sp"
-                android:textColor="@color/textViewColor"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
         </LinearLayout>
 
     </HorizontalScrollView>
@@ -66,7 +59,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/launcher_rv_id"
         android:overScrollMode="never"
-        android:layout_marginBottom="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="120dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
