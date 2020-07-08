@@ -52,6 +52,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+            <Button android:id="@+id/start_Development_id"
+                android:background="@drawable/button_kt_touch"
+                android:text="@string/start_development"
+                android:textSize="20sp"
+                android:textColor="@color/textViewColor"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/show_xml_id"
+                android:background="@drawable/button_kt_touch"
+                android:text="@string/show_xml"
+                android:textSize="20sp"
+                android:textColor="@color/textViewColor"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/hide_xml_id"
+                android:background="@drawable/button_kt_touch"
+                android:text="@string/hide_xml"
+                android:textSize="20sp"
+                android:textColor="@color/textViewColor"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
     </HorizontalScrollView>

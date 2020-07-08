@@ -1,7 +1,9 @@
 package com.likego.backgrounddesktop;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,6 +41,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.update_id).setOnClickListener(this);
         findViewById(R.id.reset_id).setOnClickListener(this);
         findViewById(R.id.cut_layoutManager_id).setOnClickListener(this);
+        findViewById(R.id.start_Development_id).setOnClickListener(this);
+        findViewById(R.id.show_xml_id).setOnClickListener(this);
+        findViewById(R.id.hide_xml_id).setOnClickListener(this);
 
         long startTime = System.currentTimeMillis();
         mAppInfoModels = AppInfoUtils.getLauncherInfo(this);
@@ -48,6 +53,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void initRecyclerView() {
+        Log.d(TAG, "initMoreRecyclerView: 切换画廊模式");
         mRecyclerView = findViewById(R.id.launcher_rv_id);
         CarouselLayoutManager layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL,true);//true循环轮播
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this,mAppInfoModels,R.layout.rc_item);
@@ -62,6 +68,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void initMoreRecyclerView() {
+        Log.d(TAG, "initMoreRecyclerView: 切换瀑布流模式");
         StaggeredGridLayoutManager staggeredGridLayoutManager
                 = new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -79,6 +86,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             intent.setComponent(new ComponentName(appInfoModel.getPackageName(), appInfoModel.getPackageClassName()));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             startActivity(intent);
+            Log.d(TAG, "onItemClick: 打开应用 "+appInfoModel.getAppName());
         }
 
         @Override
@@ -86,6 +94,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Uri packageUri = Uri.parse("package:" + mAppInfoModels.get(position).getPackageName());
             Intent intent = new Intent(Intent.ACTION_DELETE, packageUri);
             startActivity(intent);
+            Log.d(TAG, "onItemClick: 卸载应用 "+mAppInfoModels.get(position).getAppName());
         }
     };
 
@@ -94,12 +103,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.open_setting_id:
+                Log.d(TAG, "onClick: 打开设置");
                 Intent intent = new Intent(Settings.ACTION_SETTINGS);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
             case R.id.update_id:
+                Log.d(TAG, "onClick: 打开升级程序");
                 try {
                     Intent upgradeIntent = new Intent("android.com.likego.hph03_update.Main");
                     upgradeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -111,9 +122,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.reset_id:
-//                sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
+                Log.d(TAG, "onClick: 恢复出厂设置");
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("恢复出厂设置");
+                builder.setNegativeButton("取消", null);
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "onClick: 确认");
+                        sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
+                    }
+                });
+                builder.create().show();
                 break;
             case R.id.cut_layoutManager_id:
+                Log.d(TAG, "onClick: 切换模式");
                 TextView textView = (TextView) v;
                 if (mCurLayoutManageFlag){
                     mCurLayoutManageFlag = false;
@@ -123,6 +146,25 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     mCurLayoutManageFlag = true;
                     initMoreRecyclerView();
                     textView.setText("切换画廊模式");
+                }
+                break;
+            case R.id.start_Development_id:
+                AppInfoUtils.startDevelopmentActivity(MainActivity.this);
+                break;
+            case R.id.show_xml_id:
+                boolean status = AppInfoUtils.startUiTest(true);
+                if (status){
+                    Toast.makeText(MainActivity.this,"显示成功,稍后生效",Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(MainActivity.this,"显示失败",Toast.LENGTH_LONG).show();
+                }
+                break;
+            case R.id.hide_xml_id:
+                status = AppInfoUtils.startUiTest(false);
+                if (status){
+                    Toast.makeText(MainActivity.this,"关闭成功,稍后生效",Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(MainActivity.this,"关闭失败",Toast.LENGTH_LONG).show();
                 }
                 break;
             default:

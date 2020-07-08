@@ -1,6 +1,5 @@
 package com.likego.backgrounddesktop.model;
 
-import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 
 /**
