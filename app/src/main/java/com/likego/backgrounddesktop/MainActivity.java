@@ -5,11 +5,16 @@ import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,33 +34,63 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
 
     private ArrayList<AppInfoModel> mAppInfoModels = new ArrayList<>();
-
     private RecyclerView mRecyclerView;
+    private boolean mScreenFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: -------------------------------");
+        initWindow();//沉浸式
+
         findViewById(R.id.open_setting_id).setOnClickListener(this);
         findViewById(R.id.update_id).setOnClickListener(this);
         findViewById(R.id.reset_id).setOnClickListener(this);
-        findViewById(R.id.cut_layoutManager_id).setOnClickListener(this);
+        TextView textView = findViewById(R.id.cut_layoutManager_id);
+        textView.setOnClickListener(this);
         findViewById(R.id.start_Development_id).setOnClickListener(this);
         findViewById(R.id.show_xml_id).setOnClickListener(this);
         findViewById(R.id.hide_xml_id).setOnClickListener(this);
+        mRecyclerView = findViewById(R.id.launcher_rv_id);
 
         long startTime = System.currentTimeMillis();
-        mAppInfoModels = AppInfoUtils.getLauncherInfo(this);
-        initRecyclerView();
+
+        mAppInfoModels = AppInfoUtils.getLauncherInfo(this);//获取所有APP信息
+        mScreenFlag = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;//获取横竖屏状态
+
+        if (savedInstanceState != null && savedInstanceState.getBoolean("status")) {//获取旋转屏幕前的状态
+            mCurLayoutManageFlag = true;
+            textView.setText("画廊模式");
+            initMoreRecyclerView();
+        }else {
+            initRecyclerView();
+        }
+
         Toast.makeText(this,"加载耗时"+(System.currentTimeMillis() - startTime)+" ms",Toast.LENGTH_SHORT).show();
 
     }
 
+    private void initWindow() {
+        Window window = getWindow();
+        View decorView = window.getDecorView();
+        int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(option);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
     private void initRecyclerView() {
         Log.d(TAG, "initMoreRecyclerView: 切换画廊模式");
-        mRecyclerView = findViewById(R.id.launcher_rv_id);
-        CarouselLayoutManager layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL,true);//true循环轮播
+        CarouselLayoutManager layoutManager;
+        if (mScreenFlag){//横屏
+            layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL,true);//true循环轮播
+        }else {//竖屏
+            layoutManager = new CarouselLayoutManager(CarouselLayoutManager.VERTICAL,true);//true循环轮播
+        }
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this,mAppInfoModels,R.layout.rc_item);
 
         layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
@@ -68,9 +103,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void initMoreRecyclerView() {
-        Log.d(TAG, "initMoreRecyclerView: 切换瀑布流模式");
-        StaggeredGridLayoutManager staggeredGridLayoutManager
-                = new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL);
+        Log.d(TAG, "initMoreRecyclerView: 切换方格模式");
+        StaggeredGridLayoutManager staggeredGridLayoutManager;
+        if (mScreenFlag){//横屏
+            staggeredGridLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.HORIZONTAL);
+        }else {
+            staggeredGridLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+        }
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this,mAppInfoModels,R.layout.staggered_item);
         mRecyclerView.setAdapter(recyclerViewAdapter);
@@ -141,11 +180,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 if (mCurLayoutManageFlag){
                     mCurLayoutManageFlag = false;
                     initRecyclerView();
-                    textView.setText("切换瀑布模式");
+                    textView.setText("方格模式");
                 }else {
                     mCurLayoutManageFlag = true;
                     initMoreRecyclerView();
-                    textView.setText("切换画廊模式");
+                    textView.setText("画廊模式");
                 }
                 break;
             case R.id.start_Development_id:
@@ -170,5 +209,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("status", mCurLayoutManageFlag);//旋转屏幕时保存当前模式
     }
 }

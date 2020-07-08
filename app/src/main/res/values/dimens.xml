@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bottom_button_width">90dp</dimen>
+    <dimen name="bottom_button_height">40dp</dimen>
+    <dimen name="bottom_button_layout_marginStart">10dp</dimen>
+    <dimen name="bottom_button_textSize">16sp</dimen>
+
+    <dimen name="item_layout_width_height">240dp</dimen>
+    <dimen name="item_title_textSize">20sp</dimen>
+    <dimen name="item_icon_width_height">60dp</dimen>
+    <dimen name="item_version_textSize">16sp</dimen>
+
+    <dimen name="staggered_item_layout_width_height">100dp</dimen>
+    <dimen name="staggered_item_title_textSize">12sp</dimen>
+    <dimen name="staggered_item_icon_width_height">30dp</dimen>
+    <dimen name="staggered_item_version_textSize">8sp</dimen>
+
+</resources>

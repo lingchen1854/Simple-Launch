@@ -8,76 +8,84 @@
 
     <HorizontalScrollView
         android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="80dp">
+            android:layout_height="wrap_content">
 
             <Button android:id="@+id/open_setting_id"
                 android:background="@drawable/button_kt_touch"
                 android:text="@string/open_setting"
-                android:textSize="20sp"
+                android:textSize="@dimen/bottom_button_textSize"
                 android:textColor="@color/textViewColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_marginStart="@dimen/bottom_button_layout_marginStart"
+                android:layout_width="@dimen/bottom_button_width"
+                android:layout_height="@dimen/bottom_button_height"
+                />
 
             <Button android:id="@+id/update_id"
                 android:background="@drawable/button_kt_touch"
                 android:text="@string/update"
-                android:textSize="20sp"
+                android:textSize="@dimen/bottom_button_textSize"
                 android:textColor="@color/textViewColor"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_marginStart="@dimen/bottom_button_layout_marginStart"
+                android:layout_width="@dimen/bottom_button_width"
+                android:layout_height="@dimen/bottom_button_height"
+                />
 
             <Button android:id="@+id/reset_id"
                 android:background="@drawable/button_kt_touch"
                 android:text="@string/reset"
-                android:textSize="20sp"
+                android:textSize="@dimen/bottom_button_textSize"
                 android:textColor="@color/textViewColor"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_marginStart="@dimen/bottom_button_layout_marginStart"
+                android:layout_width="@dimen/bottom_button_width"
+                android:layout_height="@dimen/bottom_button_height"
+                />
 
             <Button android:id="@+id/cut_layoutManager_id"
                 android:background="@drawable/button_kt_touch"
                 android:text="@string/change"
-                android:textSize="20sp"
+                android:textSize="@dimen/bottom_button_textSize"
                 android:textColor="@color/textViewColor"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_marginStart="@dimen/bottom_button_layout_marginStart"
+                android:layout_width="@dimen/bottom_button_width"
+                android:layout_height="@dimen/bottom_button_height"
+                />
 
             <Button android:id="@+id/start_Development_id"
                 android:background="@drawable/button_kt_touch"
                 android:text="@string/start_development"
-                android:textSize="20sp"
+                android:textSize="@dimen/bottom_button_textSize"
                 android:textColor="@color/textViewColor"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_marginStart="@dimen/bottom_button_layout_marginStart"
+                android:layout_width="@dimen/bottom_button_width"
+                android:layout_height="@dimen/bottom_button_height"
+                />
 
             <Button android:id="@+id/show_xml_id"
                 android:background="@drawable/button_kt_touch"
                 android:text="@string/show_xml"
-                android:textSize="20sp"
+                android:textSize="@dimen/bottom_button_textSize"
                 android:textColor="@color/textViewColor"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_marginStart="@dimen/bottom_button_layout_marginStart"
+                android:layout_width="@dimen/bottom_button_width"
+                android:layout_height="@dimen/bottom_button_height"
+                />
 
             <Button android:id="@+id/hide_xml_id"
                 android:background="@drawable/button_kt_touch"
                 android:text="@string/hide_xml"
-                android:textSize="20sp"
+                android:textSize="@dimen/bottom_button_textSize"
                 android:textColor="@color/textViewColor"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_marginStart="@dimen/bottom_button_layout_marginStart"
+                android:layout_width="@dimen/bottom_button_width"
+                android:layout_height="@dimen/bottom_button_height"
+                />
 
         </LinearLayout>
 
@@ -85,10 +93,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/launcher_rv_id"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
         android:overScrollMode="never"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="120dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

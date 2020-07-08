@@ -51,8 +51,8 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.appName.setText(mAppInfoModels.get(position).getAppName());
-        holder.versionName.setText(mAppInfoModels.get(position).getVersionName());
-        holder.versionCode.setText(mAppInfoModels.get(position).getVersionCode());
+        holder.versionName.setText("VN : "+mAppInfoModels.get(position).getVersionName());
+        holder.versionCode.setText("VC : "+mAppInfoModels.get(position).getVersionCode());
         holder.icon.setImageDrawable(mAppInfoModels.get(position).getIcon());
         if (mOnItemClickListener != null){
             holder.item.setOnClickListener(new View.OnClickListener() {
